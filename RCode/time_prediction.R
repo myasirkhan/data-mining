@@ -8,17 +8,20 @@ exports_ts <- log(statstimeseries)
 plot.ts(exports_ts)
 exports_decoposed <- decompose(exports_ts)
 plot(exports_decoposed)
-auto.arima(exports_ts)
-fit <- arima(exports_ts, order = c(2, 0, 0))
-accuracy(fit)
-forecasted = forecast(fit, 5)
-plot(forecasted)
+
 # removing seasonalily
 export_without_sesonality <- exports_ts - exports_decoposed$seasonal
 plot(export_without_sesonality)
 stats_data <- diff(export_without_sesonality, differences = 1)
 plot.ts(stats_data)
-par(mfrow = c(2, 1))
+
 acf(stats_data)
 pacf(stats_data)
+
+auto.arima(statstimeseries)
+fit <- arima(statstimeseries, order = c(2, 1, 0))
+accuracy(fit)
+forecasted = forecast(fit, 5)
+par(mfrow = c(1, 1))
+plot(forecasted)
 
